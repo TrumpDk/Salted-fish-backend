@@ -1,4 +1,4 @@
-package com.salted_fish.fishing.controller;
+package com.salted_fish.fishing.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
