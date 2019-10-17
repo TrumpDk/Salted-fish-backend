@@ -1,5 +1,7 @@
 package com.salted_fish.fishing.Entity;
 
+import java.sql.Date;
+
 public class User {
 
     private Integer userId;
@@ -14,8 +16,30 @@ public class User {
 
     private String token;
 
-    public void setUserId(int userId) {
+    private Date expireTime;
+
+    public User() {}
+
+    public User(Integer userId, String userName, String password, String phone, String avatar, String token, Date expireTime) {
         this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.token = token;
+        this.expireTime = expireTime;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public Date getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(Date expireTime) {
+        this.expireTime = expireTime;
     }
 
     public String getToken() {
@@ -58,7 +82,7 @@ public class User {
         this.userName = userName;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

@@ -17,6 +17,7 @@ public class CorsConfig {
     };
 
     // filter
+    // view this blog https://www.cnblogs.com/yuansc/p/9076604.html
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -24,7 +25,7 @@ public class CorsConfig {
         this.addAllowedOrigins(corsConfiguration);
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
     }
