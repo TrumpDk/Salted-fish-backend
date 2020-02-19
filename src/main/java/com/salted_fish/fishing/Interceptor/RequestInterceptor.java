@@ -10,11 +10,12 @@ import javax.servlet.http.HttpSession;
 
 import com.salted_fish.fishing.Entity.User;
 import com.salted_fish.fishing.Service.UserService;
-import com.salted_fish.fishing.Utils.JsonUtil;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -83,14 +84,22 @@ public class RequestInterceptor implements HandlerInterceptor {
         }
     }
 
+    // response with JSON object
     public void responseWithJson(HttpServletResponse response) {
-        JsonUtil<?> json = new JsonUtil<>(null, "504", "you did not log in yet");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("data", "");
+            jsonObject.put("code", "401");
+            jsonObject.put("msg", "you did not log in yet");
+        } catch (JSONException e1) {
+            logger.error(e1.getMessage());
+        }
         PrintWriter writer = null;
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=utf-8");
+        response.setContentType("application/json;charset=UTF-8");
         try {
             writer = response.getWriter();
-            writer.print(json);
+            writer.print(jsonObject);
         } catch (Exception e) {
             logger.error(e.getMessage());
         } finally {

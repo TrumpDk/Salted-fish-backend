@@ -12,14 +12,14 @@ import org.apache.ibatis.annotations.Update;
 public interface UserInfoMapper {
 
     @Select("select * from User_Info where userName = #{userName} and password = #{password}")
-    User findByUser(UserDto userDto);
+    public User findByUser(UserDto userDto);
     
     @Update("update User_Info set expireTime = #{expireTime}, token = #{uuid} where userId = #{userId}")
-    void updateExpireTime(Date expireTime, String uuid, int userId);
+    public void updateExpireTime(Date expireTime, String uuid, int userId);
 
     @Insert("insert into User_Info values(#{userId}, #{password}, #{avatar}, #{phone}, #{token}, #{userName}, #{expireTime})")
-    int createNewUser(User user);
+    public int createNewUser(User user);
 
     @Select("select * from User_Info where token = #{cookieValue}")
-    User findUserByCookieValue(String cookieValue);
+    public User findUserByCookieValue(String cookieValue);
 }

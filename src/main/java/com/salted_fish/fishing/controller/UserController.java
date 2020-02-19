@@ -82,9 +82,9 @@ public class UserController {
         return new JsonUtil<>(userName, "200", "successful");
     }
 
-    @GetMapping("/tesetMapping")
+    @GetMapping("/checkLogIn")
     @ResponseBody
     public JsonUtil<?> testMapping() {
-        return new JsonUtil<>("code", "msg");
+        return new JsonUtil<>("200", "you had already logged in");
     }
 }
