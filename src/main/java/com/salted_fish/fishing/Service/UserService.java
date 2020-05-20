@@ -14,4 +14,6 @@ public interface UserService {
     public int userRegister(User user);
 
     public User findUserByCookieValue(String cookieValue);
+
+    public void userLogout(int userId);
 }

@@ -44,7 +44,7 @@ public class UserController {
             if (user != null) {
                 String uuid = UuidUtil.getUUID();
                 session.setAttribute("userInfo", user);
-                CookieUtil.setCookie("SESSIONV1", uuid);
+                CookieUtil.setCookie("SESSIONEV1", uuid);
                 Date expireTime = DateUtil.setExpireDate(new Date(), 7);
                 uService.updateExpireTime(expireTime, uuid, user.getUserId());
                 UserInfo userInfo = new UserInfo(user.getUserName(), user.getAvatar());
@@ -64,12 +64,13 @@ public class UserController {
     @ResponseBody
     public JsonUtil<?> userRegister(@RequestBody UserRegisterDto uRegisterDto) {
         logger.info("get into Register" + new Date());
-        User user = new User(null, uRegisterDto.getUserName(), uRegisterDto.getPassword(), uRegisterDto.getPhone(), null, null, null);
+        User user = new User(null, uRegisterDto.getUserName(), uRegisterDto.getPassword(), uRegisterDto.getPhone(),
+                null, null, null);
         try {
             int status = uService.userRegister(user);
             logger.info(status + " row is inserted");
             return new JsonUtil<>("200", "new user added successfully");
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.error(e.getMessage());
             return new JsonUtil<>("201", "add new user failed");
         }
@@ -84,7 +85,25 @@ public class UserController {
 
     @GetMapping("/checkLogIn")
     @ResponseBody
-    public JsonUtil<?> testMapping() {
-        return new JsonUtil<>("200", "you had already logged in");
+    public JsonUtil<?> testMapping(HttpSession session) {
+        User user = (User) session.getAttribute("userInfo");
+        UserInfo userInfo = new UserInfo(user.getUserName(), user.getAvatar());
+        return new JsonUtil<>(userInfo, "200", "you had already logged in");
+    }
+
+    @GetMapping("/Logout")
+    @ResponseBody
+    public JsonUtil<?> userLogout(HttpSession session) {
+        try {
+            User user = (User) session.getAttribute("userInfo");
+            uService.userLogout(user.getUserId());
+            session.removeAttribute("userInfo");
+            CookieUtil.setCookie("SESSIONEV1", null, 0);
+            return new JsonUtil<>("200", "user lou out successfully");
+        } catch (Exception e) {
+            session.removeAttribute("userInfo");
+            CookieUtil.setCookie("SESSIONEV1", null, 0);
+            return new JsonUtil<>("201", "user lou out failed but we still logout");
+        }
     }
 }

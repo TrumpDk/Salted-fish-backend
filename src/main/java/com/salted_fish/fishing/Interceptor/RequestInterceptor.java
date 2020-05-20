@@ -50,12 +50,12 @@ public class RequestInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute("userInfo");
 
         if (user != null) {
-            logger.info("user is " + user.getUserName());
+            logger.info("user is not expire" + user.getUserName());
             return true;
         } else {
             if (request.getCookies() != null) {
                 for (Cookie cookie : request.getCookies()) {
-                    if (cookie.getName().equals("SESSIONV1")) {
+                    if (cookie.getName().equals("SESSIONEV1")) {
                         cookieValue = cookie.getValue();
                         logger.info("request cookie is " + cookieValue);
                         break;

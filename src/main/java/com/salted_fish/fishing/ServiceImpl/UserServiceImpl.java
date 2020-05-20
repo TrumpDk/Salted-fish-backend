@@ -35,5 +35,10 @@ public class UserServiceImpl implements UserService {
     public User findUserByCookieValue(String cookieValue) {
         return userInfoMapper.findUserByCookieValue(cookieValue);
     }
-    
+
+    @Override
+    public void userLogout(int userId) {
+        userInfoMapper.userLogout(userId);
+    }
+
 }

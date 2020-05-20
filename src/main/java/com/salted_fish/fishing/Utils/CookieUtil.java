@@ -112,6 +112,7 @@ public class CookieUtil {
         } else {
             cookie.setMaxAge(COOKIE_MAX_AGE);
         }
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
         try {
             response.flushBuffer();

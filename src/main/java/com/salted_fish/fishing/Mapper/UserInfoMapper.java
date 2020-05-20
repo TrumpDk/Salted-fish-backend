@@ -11,9 +11,9 @@ import org.apache.ibatis.annotations.Update;
 
 public interface UserInfoMapper {
 
-    @Select("select * from User_Info where userName = #{userName} and password = #{password}")
+    @Select("select * from User_Info where phone = #{userName} and password = #{password}")
     public User findByUser(UserDto userDto);
-    
+
     @Update("update User_Info set expireTime = #{expireTime}, token = #{uuid} where userId = #{userId}")
     public void updateExpireTime(Date expireTime, String uuid, int userId);
 
@@ -22,4 +22,7 @@ public interface UserInfoMapper {
 
     @Select("select * from User_Info where token = #{cookieValue}")
     public User findUserByCookieValue(String cookieValue);
+
+    @Update("update User_Info set token = null, expireTime=Null where userId=#{userId}")
+    public void userLogout(int userId);
 }
