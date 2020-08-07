@@ -3,6 +3,7 @@ package com.salted_fish.fishing.ServiceImpl;
 import java.util.List;
 
 import com.salted_fish.fishing.Entity.Commodity;
+import com.salted_fish.fishing.Entity.ItemListForHome;
 import com.salted_fish.fishing.Mapper.CommodityMapper;
 import com.salted_fish.fishing.Service.CommodityService;
 
@@ -18,6 +19,11 @@ public class CommodityServiceImpl implements CommodityService {
     @Override
     public List<Commodity> selectLimitedCommodity(int startIndex, int pageSize) {
         return commodityMapper.selectLimitedCommodity(startIndex, pageSize);
+    }
+
+    @Override
+    public List<ItemListForHome> selectGoodsForHome() {
+        return commodityMapper.queryDataForHomrPage();
     }
 
 }
